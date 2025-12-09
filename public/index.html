@@ -91,7 +91,7 @@
 
     async function verifyCode() {
         const code = document.getElementById('teacher-code').value;
-        const res = await postData('/api/auth/verify_code', { code });
+        const res = await postData('/api/auth/verify_code.py', { code });
 
         if(res && res.valid) {
             // Redirect to the generic quiz page with the Quiz ID in the URL
