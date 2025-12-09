@@ -1,7 +1,10 @@
-// public/js/main.js
+/**
+ * main.js
+ * Handles data transmission between the website and the Python backend.
+ */
 
 async function postData(url, data) {
-    console.log(`Attempting to send data to: ${url}`); // Debug log
+    console.log(`🚀 Sending data to: ${url}`); // Helps you see where it's going in Console
 
     try {
         const response = await fetch(url, {
@@ -10,34 +13,37 @@ async function postData(url, data) {
             body: JSON.stringify(data)
         });
 
-        // 1. Check for Server Errors (Red Lights)
+        // 1. Check if the server rejected the request
         if (!response.ok) {
-            // Read the text response (usually an HTML error page from Vercel)
-            const errorText = await response.text(); 
-            console.error(`Server Error ${response.status}:`, errorText);
+            // Try to read the error text from the server
+            const errorText = await response.text();
+            console.error(`❌ Server Error ${response.status}:`, errorText);
 
+            // Throw specific errors based on the status code
             if (response.status === 404) {
-                throw new Error("404 Not Found: The website cannot find the Python file.");
+                throw new Error("404 Not Found: Vercel cannot find the Python file. (Did you forget .py?)");
             }
             if (response.status === 500) {
-                throw new Error("500 Server Error: The Python code crashed (Check logs).");
+                throw new Error("500 Server Error: The Python code crashed. (Check Logs: __init__.py or Environment Variable)");
             }
             throw new Error(`Server Error: ${response.status}`);
         }
 
-        // 2. Success? Parse the JSON
-        return await response.json();
+        // 2. Success! Parse the JSON response
+        const jsonResponse = await response.json();
+        console.log("✅ Success:", jsonResponse);
+        return jsonResponse;
 
     } catch (error) {
         console.error('Detailed Fetch Error:', error);
-        
-        // Show specific alerts so you know what to fix
+
+        // Show a helpful popup to the user (You)
         if (error.message.includes("404")) {
-            alert("System Error (404): API Route not found. The `vercel.json` configuration is likely wrong.");
+            alert("⚠️ SYSTEM ERROR (404)\nThe website cannot find the API file.\nFix: Add '.py' to the URL in your HTML file.");
         } else if (error.message.includes("500")) {
-            alert("System Error (500): The backend crashed. Check '__init__.py' files or Environment Variables.");
+            alert("⚠️ CRASH ERROR (500)\nThe Python backend failed.\nFix: Check Vercel Logs for 'ModuleNotFound' or Key errors.");
         } else {
-            alert(`Connection Error: ${error.message}`);
+            alert(`⚠️ Connection Error\n${error.message}\nCheck your internet or Vercel deployment.`);
         }
         return null;
     }
