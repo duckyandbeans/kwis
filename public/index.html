@@ -72,7 +72,7 @@
 
         if(!grade || !cls || !num) return alert("Please fill all fields");
 
-        const res = await postData('/api/auth/find_student', { 
+        const res = await postData('/api/auth/find_student.py', { 
             grade, class_id: cls, number: num 
         });
 
