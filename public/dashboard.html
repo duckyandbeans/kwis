@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-5">
+    <h1>👨‍🏫 Teacher Dashboard</h1>
+    <hr>
+    
+    <div class="card p-4">
+        <h4>Download Report Card Data</h4>
+        <p>Click below to get the latest Excel/CSV file of all student submissions.</p>
+        
+        <a href="/api/download_grades" target="_blank" class="btn btn-success btn-lg">
+            📥 Download .csv
+        </a>
+    </div>
+    
+    <div class="mt-4 text-muted">
+        <small>Note: This file can be opened directly in Microsoft Excel.</small>
+    </div>
+</body>
+</html>
