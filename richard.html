@@ -24,7 +24,6 @@
 
     <audio id="myAudio" src="testfolder5.mp3"></audio>
 
-    <button id="resetBtn">Developer Reset (Clear Play Count)</button>
 
     <script>
         const playBtn = document.getElementById('playBtn');
@@ -56,16 +55,6 @@
             }
         });
 
-        // Reset Logic for Testing
-        resetBtn.addEventListener('click', () => {
-            localStorage.removeItem('audioPlayCount');
-            playCount = 0;
-            updateUI();
-            alert("Play count reset! You can now play the audio 2 more times.");
-        });
-
-        // Initialize UI on load
-        updateUI();
     </script>
 </body>
 </html>
