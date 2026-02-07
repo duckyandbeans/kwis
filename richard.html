@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limited Playback (With Reset)</title>
+    <title>Limited Playback</title>
     <style>
         body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background-color: #f4f4f9; }
-        
-        #playBtn { padding: 15px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; margin-bottom: 10px; }
+        #playBtn { padding: 15px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background-color: #007bff; color: white; }
         #playBtn:disabled { background-color: #ccc; cursor: not-allowed; }
-        
-        /* Testing Button Styles */
-        #resetBtn { margin-top: 50px; padding: 5px 10px; font-size: 12px; background: #ffeded; border: 1px solid #ff5c5c; color: #cc0000; cursor: pointer; border-radius: 3px; }
-        #resetBtn:hover { background: #ffcfcf; }
-
         #message { margin-top: 20px; color: #555; }
     </style>
 </head>
@@ -24,15 +18,13 @@
 
     <audio id="myAudio" src="testfolder5.mp3"></audio>
 
-
     <script>
         const playBtn = document.getElementById('playBtn');
-        const resetBtn = document.getElementById('resetBtn');
         const audio = document.getElementById('myAudio');
         const message = document.getElementById('message');
 
-        // Initial play count retrieval
-        let playCount = parseInt(localStorage.getItem('audioPlayCount')) || 0;
+        // Check LocalStorage on page load
+        let playCount = localStorage.getItem('audioPlayCount') || 0;
 
         function updateUI() {
             if (playCount >= 2) {
@@ -40,8 +32,6 @@
                 playBtn.innerText = "No Plays Remaining";
                 message.innerText = "You have already listened to this recording twice.";
             } else {
-                playBtn.disabled = false;
-                playBtn.innerText = "Play Recording";
                 message.innerText = `Plays used: ${playCount} / 2`;
             }
         }
@@ -55,6 +45,8 @@
             }
         });
 
+        // Initialize UI on load
+        updateUI();
     </script>
 </body>
 </html>
